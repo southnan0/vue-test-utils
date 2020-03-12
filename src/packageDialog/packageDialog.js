@@ -1,6 +1,11 @@
 import {isEmpty, isNull, isUndefined, type} from "../type";
 import {isPositiveInt} from "../number";
 
+const obj = {
+    0:'请输入≥1的整数',
+    1:'请输入大于上一行的整数',
+    2:'上一行须为≥1的整数',
+}
 
 export const validatorArea = (area, index) => {
     return (rule, value) => {
@@ -16,7 +21,7 @@ export const validatorArea = (area, index) => {
         }
         if (index === 0) {
             if (!isPositiveInt(value)) {
-                return '请输入≥1的整数'
+                return obj[0]
             }
             return;
         } else if(index === areaLen-1 && (isUndefined(value) || isEmpty(value))){
@@ -24,13 +29,13 @@ export const validatorArea = (area, index) => {
         }else if (isPositiveInt(value)) {
             if(isPositiveInt(lastRowValue)){
                 if (value <= lastRowValue) {
-                    return '请输入大于上一行的整数';
+                    return obj[1];
                 }
                 return;
             }
 
-            return '上一行须为≥1的整数';
+            return obj[2];
         }
-        return '请输入≥1的整数';
+        return obj[0];
     }
 };
